@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.6" type="plugin" group="crowdfunding" method="upgrade">
+    <name>PLG_CROWDFUNDING_GALLERY</name>
+    <author>Todor Iliev</author>
+    <copyright>Copyright (C) 2016 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.en.html GNU/GPLv3</license>
+    <authorEmail>todor@itprism.com</authorEmail>
+    <authorUrl>http://itprism.com</authorUrl>
+    <version>1.2</version>
+    <creationDate>05 November, 2016</creationDate>
+    <description><![CDATA[
+	<p>Crowdfunding - Gallery is a plugin that provides functionality to create gallery for campaign.</p>
+	<p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
+	<p>Please, <a href="http://extensions.joomla.org/extensions/extension/e-commerce/donations/crowdfunding" target="_blank">vote for the extension</a> on Joomla! Extensions Directory</p>
+	]]></description>
+    
+    <files>
+        <filename plugin="gallery">gallery.php</filename>
+
+        <folder>js</folder>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+    </files>
+    
+    <help url="PLG_CROWDFUNDING_GALLERY_HELP_URL"/>
+
+    <config>
+        <fields name="params">
+
+            <fieldset name="basic" addfieldpath="/administrator/components/com_magicgallery/models/fields">
+                <field name="category_id" type="category" extension="com_magicgallery" label="PLG_CROWDFUNDING_GALLERY_CATEGORY" description="PLG_CROWDFUNDING_GALLERY_CATEGORY_DESC" />
+                <field name="additional_information" type="textarea" label="PLG_CROWDFUNDING_GALLERY_ADDITIONAL_INFORMATION" description="PLG_CROWDFUNDING_GALLERY_ADDITIONAL_INFORMATION_DESC" />
+
+                <field name="gallery_default_status" type="radio" class="btn-group"
+                       label="PLG_CROWDFUNDING_GALLERY_GALLERY_DEFAULT_STATUS"
+                       description="PLG_CROWDFUNDING_GALLERY_GALLERY_DEFAULT_STATUS_DESC"
+                       filter="intval"
+                       default="1"
+                        >
+                    <option value="0">JUNPUBLISHED</option>
+                    <option value="1">JPUBLISHED</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+		
+</extension>

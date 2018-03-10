@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="crowdfundinggallery" default="build" basedir=".">
+	<description>Crowdfunding Gallery Ant Build File</description>
+
+	<!-- load variables from config file -->
+	<property name="cfg.configFile" location="antconfig.txt" />
+	<loadproperties srcfile="${cfg.configFile}" />
+
+	<!-- auto values but should be checked -->
+	<property name="cfg.comName" value="com_${cfg.name}" />
+	<property name="cfg.pkgName" value="pkg_${cfg.name}" />
+	
+	<!-- destination directories -->
+	<property name="cfg.pluginsDestDir" location="${cfg.pkgDir}/plugins" />
+
+	<!-- Admin, Site and Media source -->
+
+	<!-- plugins source -->
+    <property name="cfg.pluginsSourceDir" location="${cfg.sourceDir}/plugins" />
+	
+	<target name="build" depends="clean, init, build_component, info" />
+
+	<!-- delete old files -->
+	<target name="clean" description="delete old files and folders">
+		<delete includeEmptyDirs="true">
+			<fileset dir="${cfg.pluginsDestDir}" includes="**/*" />
+			<fileset dir="${cfg.pkgDir}/packages" includes="*"/>
+		</delete>
+	</target>
+
+	<target name="init" depends="clean" description="creates necessary directory to build with">
+		<mkdir dir="${cfg.pkgDir}/plugins" />
+	</target>
+
+	<target name="copy" depends="init" description="copy necessary files and folders">
+		
+		<!-- CROWDFUNDING/GALLERY -->
+		
+		<!-- copy plugins files of crowdfunding/gallery -->
+		<copy todir="${cfg.pluginsDestDir}/crowdfunding/plg_crowdfunding_gallery">
+			<fileset dir="${cfg.pluginsSourceDir}/crowdfunding/gallery">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<!-- copy plugins files of crowdfunding/gallery -->
+		<copy todir="${cfg.pluginsDestDir}/content/plg_content_crowdfundinggallery">
+			<fileset dir="${cfg.pluginsSourceDir}/content/crowdfundinggallery">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<!-- END COPY PLUGINS -->
+	
+	</target>
+	
+	<target name="build_component" depends="copy" description="packages the finally component file">
+		    
+		<!-- build payment pugins -->
+	    <zip destfile="${cfg.pkgDir}/packages/plg_crowdfunding_gallery.zip" basedir="${cfg.pluginsDestDir}/crowdfunding/plg_crowdfunding_gallery" />
+		<zip destfile="${cfg.pkgDir}/packages/plg_content_crowdfundinggallery.zip" basedir="${cfg.pluginsDestDir}/content/plg_content_crowdfundinggallery" />
+		
+		<!-- build package -->
+		<zip destfile="${cfg.pkgDir}/${cfg.pkgName}_${cfg.version}-${cfg.joomlaVersion}.zip" basedir="${cfg.pkgDir}" includes="packages/**,${cfg.pkgName}.xml,CHANGELOG.md,README.md" />
+		
+	</target>
+    
+	<target name="info" description="prints information">
+		<echo message="Project: ${cfg.name}" />
+		<tstamp>
+			<format property="buildtime" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+		</tstamp>
+		<echo message="Build Time: ${buildtime}" />
+	</target>
+
+</project>
